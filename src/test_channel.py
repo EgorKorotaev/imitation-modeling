@@ -2,7 +2,7 @@ from channel import Channel
 from packet import Packet
 from range import Range
 from node import Node
-from src.buffer import Buffer
+from buffer import Buffer
 
 
 def test_channel_business():

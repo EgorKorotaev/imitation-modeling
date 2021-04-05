@@ -7,10 +7,9 @@ from range import Range
 
 def test_create():
     buffer = Buffer(capacity=25)
-    channel1 = Channel(range=Range(start=22, end=28))
+    channel1 = Channel(range=Range(start=22, end=28), receiver=Node(channels=[], buffer=Buffer(capacity=10000)))
     node = Node(channels=[channel1], buffer=buffer)
     assert len(node.channels) is 1
-    assert node.channels[0] == Channel(Range(22, 28))
     assert node.buffer is buffer
 
 
@@ -26,7 +25,7 @@ def test_packet_received():
 
 def test_packet_sent_to_channel():
     buffer = Buffer(capacity=25)
-    channel1 = Channel(range=Range(start=20, end=20))
+    channel1 = Channel(range=Range(start=20, end=20), receiver=Node(channels=[], buffer=Buffer(capacity=10000)))
     node = Node(channels=[channel1], buffer=buffer)
     packet = Packet(42)
     node.packet_received(packet)
@@ -36,7 +35,7 @@ def test_packet_sent_to_channel():
 
 def test_packet_delivery_failed():
     buffer = Buffer(capacity=1)
-    channel1 = Channel(range=Range(start=20, end=20))
+    channel1 = Channel(range=Range(start=20, end=20), receiver=Node(channels=[], buffer=Buffer(capacity=10000)))
     node = Node(channels=[channel1], buffer=buffer)
 
     packet = Packet(42)

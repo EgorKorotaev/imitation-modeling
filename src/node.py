@@ -4,7 +4,7 @@ from typing import List
 from buffer import Buffer, BufferOverflow
 from packet import Packet
 from simulation_unit import SimulationUnit
-from src.channel import Channel
+from channel import Channel
 
 
 @dataclass
@@ -15,6 +15,7 @@ class Node(SimulationUnit):
     def on_clock_tick(self):
         for channel in self.channels:
             channel.on_clock_tick()
+        self._push_to_channels()
 
     def packet_received(self, packet: Packet):
         try:
