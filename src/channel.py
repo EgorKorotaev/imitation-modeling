@@ -17,19 +17,19 @@ class Channel(SimulationUnit):
         self._ticks_left_before_sent = 0
 
     def on_clock_tick(self):
-        self._ticks_left_before_sent -= 1
-        if self._ticks_left_before_sent == 0:
-            self.receiver.packet_received(self._packet)
-            self._packet = None
-
-        self.receiver.on_clock_tick()
+        if self._packet is not None:
+            self._ticks_left_before_sent -= 1
+            if self._ticks_left_before_sent == 0:
+                self.receiver.packet_received(self._packet)
+                self._packet = None
 
     def is_free(self) -> bool:
         return self._packet is None
 
     def send_packet(self, packet: Packet):
-        self._packet = packet
-        self._ticks_left_before_sent = self._generate_latency()
+        if self._packet is None:
+            self._packet = packet
+            self._ticks_left_before_sent = self._generate_latency()
 
     def _generate_latency(self) -> int:
         return random.randint(self.range.start, self.range.end)

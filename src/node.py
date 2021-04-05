@@ -13,8 +13,6 @@ class Node(SimulationUnit):
     buffer: Buffer
 
     def on_clock_tick(self):
-        for channel in self.channels:
-            channel.on_clock_tick()
         self._push_to_channels()
 
     def packet_received(self, packet: Packet):

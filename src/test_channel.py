@@ -34,3 +34,24 @@ def test_packet_delivered():
     assert channel.is_free()
     assert len(channel.receiver.buffer) == 1
     assert channel.receiver.buffer.pop().id == 42
+
+
+def test_packet_delivered():
+    node = Node(channels=[], buffer=Buffer(capacity=10))
+    channel = Channel(range=Range(2, 2), receiver=node)
+
+    channel.send_packet(Packet(id=42))
+    channel.on_clock_tick()
+    channel.on_clock_tick()
+
+    assert channel.is_free()
+    assert len(channel.receiver.buffer) == 1
+    assert channel.receiver.buffer.pop().id == 42
+
+    channel.send_packet(Packet(id=32))
+    channel.on_clock_tick()
+    channel.on_clock_tick()
+
+    assert channel.is_free()
+    assert len(channel.receiver.buffer) == 1
+    assert channel.receiver.buffer.pop().id == 32
