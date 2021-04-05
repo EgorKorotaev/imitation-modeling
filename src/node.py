@@ -2,9 +2,9 @@ from dataclasses import dataclass
 from typing import List
 
 from buffer import Buffer, BufferOverflow
-from channel import Channel
 from packet import Packet
 from simulation_unit import SimulationUnit
+from src.channel import Channel
 
 
 @dataclass
