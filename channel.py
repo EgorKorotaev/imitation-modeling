@@ -16,7 +16,7 @@ class Channel(SimulationUnit):
         self._packet = None
         self._ticks_left_before_sent = 0
 
-    def on_clock_tick(self, ticks: int = 1):
+    def on_clock_tick(self):
         self._ticks_left_before_sent -= 1
         if self._ticks_left_before_sent == 0:
             self._packet = None

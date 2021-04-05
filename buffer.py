@@ -2,6 +2,8 @@ from dataclasses import dataclass
 from collections import deque
 from typing import Callable
 
+from packet import Packet
+
 
 class BufferOverflow(Exception):
     pass
@@ -21,7 +23,7 @@ class Buffer:
     def __len__(self) -> int:
         return len(self._queue)
 
-    def push(self, packet):
+    def push(self, packet: Packet):
         if len(self) == self.capacity:
             raise BufferOverflow
 
@@ -30,5 +32,5 @@ class Buffer:
         if self._on_threshold_reached is not None and len(self) == self.threshold:
             self._on_threshold_reached()
 
-    def pop(self):
+    def pop(self) -> Packet:
         return self._queue.pop()
